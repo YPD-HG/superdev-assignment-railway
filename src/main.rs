@@ -1,7 +1,4 @@
-use axum::{
-    routing::post,
-    Router,
-};
+use axum::{Router, routing::post};
 use std::net::SocketAddr;
 
 mod handlers;
@@ -17,8 +14,8 @@ async fn main() {
         .route("/send/sol", post(handlers::send_sol))
         .route("/send/token", post(handlers::send_token));
 
-
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    let port = std::env::var("PORT").unwrap_or_else(|_| "3000".into());
+    let addr = SocketAddr::from(([0, 0, 0, 0], port.parse().unwrap()));
     println!("Server running at http://{}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
