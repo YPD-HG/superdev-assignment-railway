@@ -1,3 +1,8 @@
 [phases.setup]
-nixPkgs = ["rustc", "cargo"]
+nixPkgs = ['rustup', 'cargo']
 
+[phases.build]
+cmds = ['cargo build --release']
+
+[start]
+cmd = 'cargo run --release'
