@@ -16,7 +16,11 @@ async fn main() {
 
     let port = std::env::var("PORT").unwrap_or_else(|_| "3000".into());
     let addr = SocketAddr::from(([0, 0, 0, 0], port.parse().unwrap()));
-    println!("Server running at http://{}", addr);
+    println!(
+        "Server running on 0.0.0.0:{} (env PORT = {})",
+        port,
+        std::env::var("PORT").unwrap_or_else(|_| "not set".into())
+    );
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
